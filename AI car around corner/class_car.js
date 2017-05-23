@@ -19,61 +19,29 @@ function Car( name ){
     this.corner;
     this.section = 0;
     this.cornerIndex = 0;
-    this.change = 1;
+    this.change = 0.5;
+    this.changeOffset = 50;
 
 
     //target
-    this.minDistToTarget = 30;
+    this.minDistToTarget = 50;
     this.target = createVector(this.x+this.minDistToTarget*2,this.y);
+    this.targetTimer = 0;
 
     //DATA
     this.data = {
-        frames: 0,
+        frames: 100000,
         times: [],
         steeringSum: 0,
         steeringSums: [],
     }
+    this.firstlap = true;
 
-    this.getScore = function(){
-        //var score =  this.data.steeringSums[0] * this.data.times[0];
-        //var score =  this.data.times[0];
-        var score = this.data.steeringSums[0];
-        return score;
-    }
-
-    this.randomize = function(){
-        var prev = 0;
-        var prevStartOffset = 0;
-        this.corners.forEach( (c)=>{
-            c.s = prev;
-            c.m = constrain( c.m+random(-this.change, this.change), -1, 1 );
-            c.e = constrain( c.e+random(-this.change, this.change), -1, 1 );
-            c.startOffset = prevStartOffset;
-            c.endOffset = constrain( c.endOffset+random(-this.change*100,this.change*100), -100, 200 )
-            prevStartOffset = c.endOffset;
-            prev = c.e;
-            c.calcPoints();
-        });
-        this.corners[0].s = prev;
-        this.corners[0].calcPoints();
-        this.corners[ this.corners.length-1 ].endOffset = 0;
-        this.corners[ this.corners.length-1 ].calcPoints();
-    }
-    this.copyCorner = function( corners ){
-        for( var i=0; i<this.corners.length; i++ ){
-            var c = this.corners[i];
-            c.s = corners[i].s;
-            c.m = corners[i].m;
-            c.e = corners[i].e;
-            c.startOffset = corners[i].startOffset;
-            c.endOffset = corners[i].endOffset;
-            c.calcPoints();
-        }
-
-    }
-
+    this.last = 0;
     this.end = function(){
-        this.reset();
+        if( !this.firstlap ){
+            this.last = this.data.times[0];
+        }
     };
     this.endLap = function(){
         var time = this.data.frames;
@@ -82,19 +50,23 @@ function Car( name ){
         var time = this.data.frames + subframe;
         this.data.times.unshift( time );
         this.data.steeringSums.unshift( this.data.steeringSum );
+
         this.end();
+        if( this.firstlap ) this.firstlap = false;
+        this.data.frames = 0;
     }
     this.nextTarget = function(){
+        this.targetTimer = 0;
         this.section++;
         if( this.section >= this.corner.points.length ){
             this.section = 0;
+            this.track.evolve();
             this.cornerIndex++;
-            if( this.cornerIndex >= this.corners.length ){
-                this.active = false;
+            if( this.cornerIndex >= this.track.corners.length ){
+                this.cornerIndex = 0;
                 this.endLap();
-                return;
             }
-            this.corner = this.corners[ this.cornerIndex ];
+            this.corner = this.track.corners[ this.cornerIndex ];
         }
         var point = this.corner.points[ this.section ];
         this.target.x = point.x;
@@ -103,7 +75,7 @@ function Car( name ){
     this.reset = function(){
         this.section = 0;
         this.cornerIndex = 0;
-        this.corner = this.corners[ 0 ];
+        this.corner = this.track.corners[ 0 ];
         this.x = this.corner.points[0].x;
         this.y = this.corner.points[0].y;
         this.nextTarget();
@@ -113,21 +85,21 @@ function Car( name ){
         this.active = true;
     }
     this.addTrack = function( track ){
-        track.corners.forEach( (corner)=>{
-            this.corners.push( new AICorner(corner) );
-        });
-        this.section = 0;
-        this.cornerIndex = 0;
-        this.corner = this.corners[0];
-        this.nextTarget();
+        this.track = new AITrack( track );
+        this.reset();
+        return this.track;
     }
     this.update = function(){
         if( this.active ){
             this.data.frames++;
+            this.targetTimer++;
+            if( this.targetTimer > 100 ){
+                this.active = false;
+                this.end();
+            }
             var targetAngle = atan2( this.target.y-this.y, this.target.x-this.x );
-            var dif = this.heading - targetAngle;
-            if( dif >  PI ) dif -= PI*2;
-            if( dif < -PI ) dif += PI*2;
+
+            var dif = angleDifference( this.heading, targetAngle );
 
             this.steeringAngle = -constrain( dif, -this.maxSterringAngle, this.maxSterringAngle );
 
@@ -140,6 +112,7 @@ function Car( name ){
             this.x += sv.x*this.speed;
             this.y += sv.y*this.speed;
 
+
             this.data.steeringSum += pow(this.steeringAngle,2);
 
             do{
@@ -151,16 +124,22 @@ function Car( name ){
         }
     }
     this.drawTrack = false;
+    this.offset = 0;
+    this.marked = false;
     this.draw = function(){
-        if( this.drawTrack ){
-            this.corners.forEach( (corner)=>{
-                corner.draw();
-            });
-        }
+        //if( this.drawTrack )  this.track.draw();
+
+
+        //draw time
+        fill(255);noStroke();
+        textSize(20);
+        text( this.name, 200,200+this.offset );
+        var time = (this.last/60).toFixed(3)+"s";
+        text( time, 240,200+this.offset );
 
         stroke(255);strokeWeight(1);fill(255,50);
         if( this.drawTrack ){
-            fill(0,255,0,100);
+            fill(0,255,0,50);
             stroke(0,255,0 );
         }
         var x = this.x;
@@ -171,8 +150,13 @@ function Car( name ){
         var c = cos( this.heading );
 
         if( this.drawTrack)
-            ellipse( this.target.x, this.target.y, 10, 10 );
+            //ellipse( this.target.x, this.target.y, 20, 20 );
 
+
+        if( this.drawTrack ){
+            fill(0,255,0);
+            stroke(100,255,100 );
+        }
         //Body
         arc( x+c*l/2, y+s*l/2, w/4, w/4, this.heading+PI/2, this.heading-PI/2 );
         beginShape(  );

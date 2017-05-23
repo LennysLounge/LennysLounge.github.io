@@ -15,4 +15,9 @@ function Track( x, y ){
             corner.draw();
         })
     }
+    this.drawSegment = function( segment ){
+        this.corners[ ((segment-1)<0) ? this.corners.length-1 : (segment-1) ].draw();
+        this.corners[ (segment+1)%this.corners.length ].draw();
+        this.corners[ segment ].draw();
+    }
 }
