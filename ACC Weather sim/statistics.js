@@ -10,7 +10,9 @@ function Statistics() {
     this.wetRaceSessions = 0;
     this.mixedRaceSessions = 0;
     this.showerLength = [];
+    this.sunshineLength = [];
     this.averageShowerLength = 0;
+    this.averageSunshineLength = 0;
 }
 
 function runStatistics() {
@@ -78,9 +80,14 @@ function runSim(count) {
     // find shower length
     let isRaining = false;
     let showerLength = 0;
+    let sunshineLength = 0;
     for (let i = 0; i < weekend.length; i++) {
         if (weekend[i].rainLevel > 0) {
-            isRaining = true;
+            if(!isRaining){
+                isRaining = true;
+                statistics.sunshineLength.push(sunshineLength * 300);
+                sunshineLength = 0;
+            }
             showerLength++;
         } else {
             if (isRaining) {
@@ -88,6 +95,7 @@ function runSim(count) {
                 statistics.showerLength.push(showerLength * 300);
                 showerLength = 0;
             }
+            sunshineLength++;
         }
     }
 
@@ -98,6 +106,14 @@ function runSim(count) {
             sum += statistics.showerLength[i];
         }
         statistics.averageShowerLength = sum / statistics.showerLength.length;
+    }
+    // calc average sunshine length
+    if (statistics.sunshineLength.length > 0) {
+        let sum = 0;
+        for (let i = 0; i < statistics.sunshineLength.length; i++) {
+            sum += statistics.sunshineLength[i];
+        }
+        statistics.averageSunshineLength = sum / statistics.sunshineLength.length;
     }
 
     statistics.simsRun++;
@@ -113,7 +129,8 @@ function runSim(count) {
             + "Sessions full dry: " + statistics.dryRaceSessions + " (" + Math.round(statistics.dryRaceSessions / statistics.racesRun * 100) + "%)<br>"
             + "Sessions full wet: " + statistics.wetRaceSessions + " (" + Math.round(statistics.wetRaceSessions / statistics.racesRun * 100) + "%)<br>"
             + "Sessions mixed: " + statistics.mixedRaceSessions + " (" + Math.round(statistics.mixedRaceSessions / statistics.racesRun * 100) + "%)<br>"
-            + "<br><b>Average rain shower length:</b> " + asDuration(statistics.averageShowerLength) + "<br>";
+            + "<br><b>Average rain shower length:</b> " + asDuration(statistics.averageShowerLength) + "<br>"
+            + "<b>Average time between rain shower:</b> " + asDuration(statistics.averageSunshineLength) + "<br>";
     }
     console.log(text);
     document.getElementById("statistics").innerHTML = text;

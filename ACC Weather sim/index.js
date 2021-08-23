@@ -74,7 +74,14 @@ function draw() {
         text(Math.round(at * 100) / 100 + " C", 210, 30);
         text(Math.round(c * 100) / 100, 410, 10);
         text(Math.round(r * 100) / 100, 410, 30);
-
+    }
+    else{
+        fill(0);
+        textAlign(LEFT, CENTER);
+        text("-", 210, 10);
+        text("-", 210, 30);
+        text("-", 410, 10);
+        text("-", 410, 30);
     }
 }
 

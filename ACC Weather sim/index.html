@@ -126,6 +126,12 @@
             -o-transform: scale(1.5);
             transform: scale(1.5);
         }
+        #warning{
+            border: 2px solid rgb(255, 77, 77);
+            border-radius: 5px;
+            padding:10px;
+            background-color: rgb(255, 196, 196);
+        }
     </style>
 </head>
 
@@ -139,14 +145,23 @@
         This website gives you the tools to find exaclty the settings you want and shows you what to expect for the
         race.
     </p>
-    <h3>
-        Warning!
-    </h3>
-    <p>
-        This website is <b>not a prediction</b> for the weather of your race, it is merely a <b>example of what the
-            weather might be like</b>.
-        The weather of your race will always be random but similar to these results.
-    </p>
+    
+    <div id="warning">
+        <h3>
+            Attention!
+        </h3>
+        <p>
+            This website is <b>not a prediction</b> for the weather of your race, it is merely a <b>example of what the
+                weather might be like</b>.
+            The weather of your race will always be random but similar to these results.
+        </p>
+    </div>
+    <h2>
+        Typical weekend forcast:
+    </h2>
+    <div id="canvasContainer">
+    </div>
+    <button onclick="generateNewWeatherSim()">Generate example new weekend</button><br>
     <h2>
         Configure your weekend here.
     </h2>
@@ -179,16 +194,9 @@
     <button onclick="addEmptySession()">Add Session</button>
     <div id="sessionContainer">
     </div>
-    <h2>
-        Typical weekend forcast.
-    </h2>
-    <div id="canvasContainer">
-
-    </div>
-    <button onclick="generateNewWeatherSim()">Generate example new weekend</button><br>
     <h3>Weekend statistics</h3>
     <div id="statistics"></div>
-
+    <br>
     <h2>Share this forecast!</h2>
     <div id="linkContainer">
     </div>
