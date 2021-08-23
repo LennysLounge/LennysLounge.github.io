@@ -113,7 +113,7 @@ function runSim(count) {
             + "Sessions full dry: " + statistics.dryRaceSessions + " (" + Math.round(statistics.dryRaceSessions / statistics.racesRun * 100) + "%)<br>"
             + "Sessions full wet: " + statistics.wetRaceSessions + " (" + Math.round(statistics.wetRaceSessions / statistics.racesRun * 100) + "%)<br>"
             + "Sessions mixed: " + statistics.mixedRaceSessions + " (" + Math.round(statistics.mixedRaceSessions / statistics.racesRun * 100) + "%)<br>"
-            + "<br><b>Average shower length:</b> " + asDuration(statistics.averageShowerLength) + "<br>";
+            + "<br><b>Average rain shower length:</b> " + asDuration(statistics.averageShowerLength) + "<br>";
     }
     console.log(text);
     document.getElementById("statistics").innerHTML = text;

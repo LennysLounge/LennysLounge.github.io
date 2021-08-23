@@ -318,7 +318,7 @@ function onBodyLoad() {
         document.getElementById("randomnessSlider").value = params[2];
         document.getElementById("randomnessSliderValue").innerHTML = params[2];
         document.getElementById("temperatureSlider").value = params[3];
-        document.getElementById("temperatureSliderValue").innerHTML = params[3];
+        document.getElementById("temperatureSliderValue").innerHTML = params[3] + "C&#176";;
 
         let indexToWeekDay = {
             0: "Friday",
