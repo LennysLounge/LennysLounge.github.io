@@ -65,10 +65,12 @@
         }
 
         #linkContainer {
-            border: 1px solid #aaa;
+            border: 1px solid rgb(93, 93, 255);
+            ;
             border-radius: 5px;
-            padding: 10px;
-            margin:  10px 0 10px 0;
+            padding: 20px 10px 20px 10px;
+            margin: 10px 0 10px 0;
+            background: rgb(235, 235, 255);
         }
 
         .sliderLable {
@@ -126,10 +128,11 @@
             -o-transform: scale(1.5);
             transform: scale(1.5);
         }
-        #warning{
-            border: 2px solid rgb(255, 77, 77);
+
+        #warning {
+            border: 1px solid rgb(255, 77, 77);
             border-radius: 5px;
-            padding:10px;
+            padding: 10px;
             background-color: rgb(255, 196, 196);
         }
     </style>
@@ -145,7 +148,7 @@
         This website gives you the tools to find exaclty the settings you want and shows you what to expect for the
         race.
     </p>
-    
+
     <div id="warning">
         <h3>
             Attention!
@@ -197,10 +200,12 @@
     <h3>Weekend statistics</h3>
     <div id="statistics"></div>
     <br>
+
     <h2>Share this forecast!</h2>
     <div id="linkContainer">
     </div>
-    <button onclick="copyLink()">Copy link</button>
+    <button onclick='copyLink()'>Copy link</button>
+
 
 
 </body>

@@ -303,7 +303,9 @@ function updateCopyLink() {
     }
     let url = new URL(document.location.href)
     url.searchParams.set("weekend", btoa(saveString));
-    document.getElementById("linkContainer").innerHTML = url.toString();
+    document.getElementById("linkContainer").innerHTML =
+    "<b>Link:</b><br>"
+     + url.toString();
 }
 
 function copyLink() {
