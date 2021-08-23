@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"
+        integrity="sha512-N4kV7GkNv7QR7RX9YF/olywyIgIwNvfEe2nZtfyj73HdjCUkAfOBDbcuJ/cTaN04JKRnw1YG1wnUyNKMsNgg3g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="WeatherSim.js"></script>
+    <script src="statistics.js"></script>
+    <script src="index.js"></script>
+    <style>
+        body {
+            font-family: Helvetica;
+            margin: 40px auto;
+            max-width: 650px;
+            line-height: 1.6;
+            font-size: 18px;
+            padding: 0 10px;
+            color: #222;
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.2;
+        }
+
+        #linkContainer {
+            overflow-wrap: break-word;
+        }
+
+        .session {
+            border: 1px solid #aaa;
+            margin: 5px 0 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .session button {
+            float: right;
+        }
+
+        .sessionTable {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .sessionTable tr td:nth-child(1) {
+            width: 100px;
+        }
+
+        .sessionTable tr td:nth-child(3) {
+            width: 170px;
+        }
+
+        .sessionTable tr td:nth-child(2),
+        .sessionTable tr td:nth-child(4) {
+            padding: 0 10px 0 10px;
+        }
+
+        .sessionTable input,
+        .sessionTable select {
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        #linkContainer {
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .sliderLable {
+            display: inline-block;
+            width: 120px;
+        }
+
+        .slider {
+            width: 100%;
+        }
+
+        #settingsTable {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #settingsTable tr td:nth-child(1) {
+            width: 110px;
+        }
+
+        #settingsTable tr td:nth-child(2) {
+            padding: 0 20px 0 10px;
+        }
+
+        #settingsTable tr td:nth-child(3) {
+            width: 50px;
+        }
+
+        button {
+            font-size: inherit;
+            padding: 5px 10px 5px 10px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #eee;
+        }
+
+        .session button {
+            padding: 0 5px 0 5px;
+        }
+
+        input,
+        select {
+            font-size: inherit;
+        }
+
+        input[type=checkbox] {
+            -ms-transform: scale(1.5);
+            -moz-transform: scale(1.5);
+            -webkit-transform: scale(1.5);
+            -o-transform: scale(1.5);
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+
+<body onload="onBodyLoad()">
+    <header>
+        <h1>Assetto Corsa Competizione<br> weather simulator</h1>
+        <aside>So you know what to expect for the race.</aside>
+    </header>
+    <p>
+        ACC uses a complicated algorithm to simulate the weather for the whole race weekend.
+        This website gives you the tools to find exaclty the settings you want and shows you what to expect for the
+        race.
+    </p>
+    <h3>
+        Warning!
+    </h3>
+    <p>
+        This website is <b>not a prediction</b> for the weather of your race, it is merely a <b>example of what the
+            weather might be like</b>.
+        The weather of your race will always be random but similar to these results.
+    </p>
+    <h2>
+        Configure your weekend here.
+    </h2>
+    <table id="settingsTable">
+        <tr>
+            <td>Rain Level:</td>
+            <td><input class="slider" id="rainLevelSlider" type="range" min="0" max="100" value="20" step="5"
+                    oninput="inputChangedSlider(0);"></td>
+            <td><span id="rainLevelSliderValue">0.2</span></td>
+        </tr>
+        <tr>
+            <td>Cloud Level:</td>
+            <td><input class="slider" id="cloudLevelSlider" type="range" min="0" max="100" value="30" step="5"
+                    oninput="inputChangedSlider(1);"></td>
+            <td><span id="cloudLevelSliderValue">0.2</span></td>
+        </tr>
+        <tr>
+            <td>Randomness:</td>
+            <td><input class="slider" id="randomnessSlider" type="range" min="0" max="7" , value="3"
+                    oninput="inputChangedSlider(2);"></td>
+            <td><span id="randomnessSliderValue">3</span></td>
+        </tr>
+        <tr>
+            <td>Temperature:</td>
+            <td><input class="slider" id="temperatureSlider" type="range" min="10" max="45" , value="25"
+                    oninput="inputChangedSlider(3);"></td>
+            <td><span id="temperatureSliderValue">25C&#176</span></td>
+        </tr>
+    </table>
+    <button onclick="addEmptySession()">Add Session</button>
+    <div id="sessionContainer">
+    </div>
+    <h2>
+        Typical weekend forcast.
+    </h2>
+    <div id="canvasContainer">
+
+    </div>
+    <button onclick="generateNewWeatherSim()">Generate new weekend</button><br>
+    <h3>Weekend statistics</h3>
+    <div id="statistics"></div>
+
+    <h2>Share this forecast!</h2>
+    <div id="linkContainer">
+    </div>
+    <button onclick="copyLink()">Copy link</button>
+
+
+</body>
