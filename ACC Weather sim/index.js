@@ -13,8 +13,6 @@ function setup() {
 
     weatherSim = new WeatherSim(0.2, 0.3, 3, 27);
     weatherSim.calculateWeekend(300);
-
-    addEmptySession();
 }
 
 function draw() {
@@ -336,6 +334,8 @@ function onBodyLoad() {
             saveString += document.getElementById("sessionLength" + sessionId).value = parseInt(params[5 + 4 * i + 2]);
             saveString += document.getElementById("sessionRace" + sessionId).checked = params[5 + 4 * i + 3] == "true";
         }
+    }else{
+        addEmptySession();
     }
     updateCopyLink();
     runStatistics();
