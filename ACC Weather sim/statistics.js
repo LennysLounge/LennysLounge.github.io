@@ -132,6 +132,5 @@ function runSim(count) {
             + "<br><b>Average rain shower length:</b> " + asDuration(statistics.averageShowerLength) + "<br>"
             + "<b>Average time between rain shower:</b> " + asDuration(statistics.averageSunshineLength) + "<br>";
     }
-    console.log(text);
     document.getElementById("statistics").innerHTML = text;
 }

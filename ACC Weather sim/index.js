@@ -69,19 +69,29 @@ function draw() {
         ellipse(mouseX, height - 30 - (height - 80) * at / 45, 10, 10);
 
         fill(0);
-        textAlign(LEFT, CENTER);
-        text(asTime(t) + ((t%86400) < 43200 ? " AM" : " PM"), 210, 10);
-        text(Math.round(at * 100) / 100 + " C", 210, 30);
-        text(Math.round(c * 100) / 100, 410, 10);
-        text(Math.round(r * 100) / 100, 410, 30);
-    }
-    else{
+        textAlign(CENTER, CENTER);
+        text(asTime(t) + ((t % 86400) < 43200 ? " AM" : " PM"), 250, 10);
+        text(Math.round(at * 100) / 100 + " C", 250, 30);
+        text(Math.round(c * 100) / 100, 450, 10);
+        fill(255);
+        text(Math.round(r * 100) / 100, 450, 30);
+
+
+        let intensityIndex = [0, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4][Math.floor(r * 10)];
+        let rainIntensityString = ["Dry", "Light rain", "Rain", "Heavy rain", "Very heavy"][intensityIndex];
         fill(0);
         textAlign(LEFT, CENTER);
-        text("-", 210, 10);
-        text("-", 210, 30);
-        text("-", 410, 10);
-        text("-", 410, 30);
+        text(rainIntensityString, 500, 30);
+
+    }
+    else {
+        fill(0);
+        textAlign(CENTER, CENTER);
+        text("-", 250, 10);
+        text("-", 250, 30);
+        text("-", 450, 10);
+        fill(255);
+        text("-", 450, 30);
     }
 }
 
@@ -149,6 +159,16 @@ function drawGraphBackground() {
         stroke(0, 0, 0, 100);
         rect(50 + (width - 100) * session.start, 50, (width - 100) * session.length, height - 80);
     }
+
+    noStroke();
+    fill(150);
+    rect(405, 0, 90, 20);
+    fill(0, 0, 255);
+    rect(405, 20, 90, 20);
+    fill(0, 255, 0);
+    rect(205, 20, 90, 20);
+
+
 
 }
 
@@ -341,7 +361,8 @@ function onBodyLoad() {
             saveString += document.getElementById("sessionLength" + sessionId).value = parseInt(params[5 + 4 * i + 2]);
             saveString += document.getElementById("sessionRace" + sessionId).checked = params[5 + 4 * i + 3] == "true";
         }
-    }else{
+        generateNewWeatherSim();
+    } else {
         addEmptySession();
     }
     updateCopyLink();
