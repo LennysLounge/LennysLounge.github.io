@@ -1,4 +1,4 @@
-var weatherSim = 0;
+var weatherSim = undefined;
 var sessionArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var statisticsTimeout;
 var statistics = new Statistics();
@@ -11,8 +11,8 @@ function setup() {
 
     ellipseMode(CENTER);
 
-    weatherSim = new WeatherSim(0.2, 0.3, 3, 27);
-    weatherSim.calculateWeekend(300);
+    //weatherSim = new WeatherSim(0.2, 0.3, 3, 27);
+    generateNewWeatherSim();
 }
 
 function draw() {
@@ -24,22 +24,23 @@ function draw() {
 
     function drawGraph(value) {
         beginShape();
-        for (let i = 0; i < weatherSim.getWeekend().length; i++) {
-            let uW = (width - 100) / (weatherSim.getWeekend().length - 1);
-            let h = value(weatherSim.getWeekend()[i]);
-            vertex(50 + uW * i, height - 30 - h);
+        for (let i = 0; i < 259200; i += 450) {
+            let w = map(i, 0, 259200, 50, width - 50);
+            let h = value(weatherSim.calculateWeather(i));
+
+            vertex(w, height - 30 - h);
         }
         endShape();
     }
 
     noFill();
     stroke(150);
-    strokeWeight(3);
+    strokeWeight(2);
     drawGraph(weatherStatus => map(weatherStatus.cloudLevel, 0, 1, 0, height - 80));
     stroke(0, 0, 255);
     drawGraph(weatherStatus => map(weatherStatus.rainLevel, 0, 1, 0, height - 80));
 
-    stroke(0, 255, 0);
+    stroke(0, 200, 0);
     drawGraph(weatherStatus => map(weatherStatus.ambientTemp, 0, 45, 0, height - 80));
     strokeWeight(1);
 
@@ -55,11 +56,10 @@ function draw() {
         stroke(0);
         line(mouseX, 50, mouseX, height - 30);
 
-        let t = (mouseX - 50) / (width - 100) * 259200;
-        let i = Math.floor(t / (259200 / weatherSim.getWeekend().length));
-        let r = weatherSim.getWeekend()[i].rainLevel;
-        let c = weatherSim.getWeekend()[i].cloudLevel;
-        let at = weatherSim.getWeekend()[i].ambientTemp;
+        let t = map(mouseX, 50, width - 50, 0, 259200);
+        let r = weatherSim.calculateWeather(t).rainLevel;
+        let c = weatherSim.calculateWeather(t).cloudLevel;
+        let at = weatherSim.calculateWeather(t).ambientTemp;
         noStroke();
         fill(150);
         ellipse(mouseX, height - 30 - (height - 80) * c, 10, 10);
@@ -205,7 +205,6 @@ function generateNewWeatherSim() {
     let temperature = parseInt(document.getElementById("temperatureSlider").value);
 
     weatherSim = new WeatherSim(rainLevel, cloudLevel, randomness, temperature);
-    weatherSim.calculateWeekend(300);
 }
 
 /**
@@ -233,7 +232,6 @@ function inputChangedSlider(which) {
             weatherSim.setAmbientTempConfig(level);
             destElement.innerHTML = level + "C&#176";
         }
-        weatherSim.calculateWeekend(300);
     } else {
         destElement.innerHTML = srcElement.value;
         generateNewWeatherSim();

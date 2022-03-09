@@ -129,11 +129,20 @@
             transform: scale(1.5);
         }
 
-        #warning {
+        .warning {
             border: 1px solid rgb(255, 77, 77);
             border-radius: 5px;
-            padding: 10px;
+            padding: 20px 10px 20px 10px;
+            margin: 10px 0 10px 0;
             background-color: rgb(255, 196, 196);
+        }
+
+        .infoBox {
+            border: 1px solid rgb(93, 93, 255);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0 10px 0;
+            background: rgb(235, 235, 255);
         }
     </style>
 </head>
@@ -149,16 +158,10 @@
         race.
     </p>
 
-    <div id="warning">
-        <h3>
-            Attention!
-        </h3>
-        <p>
-            This website is <b>not a prediction</b> for the weather of your race, it is merely a <b>example of what the
-                weather might be like</b>.
-            The weather of your race will always be random but similar to these results.
-        </p>
+    <div class="infoBox">
+        <b>Now up to date with ACC version 1.8.11</b>
     </div>
+
     <h2>
         Typical weekend forcast:
     </h2>
@@ -202,6 +205,16 @@
     <br>
 
     <h2>Share this forecast!</h2>
+    <div class="warning">
+        <h3>
+            Attention!
+        </h3>
+        <p>
+            This website is <b>not a prediction</b> for the weather of your race, it is merely a <b>example of what the
+                weather might be like</b>.
+            The weather of your race will always be random but similar to these results.
+        </p>
+    </div>
     <div id="linkContainer">
         <b>Link:</b><br>
         <div id="linkContainerLink">
