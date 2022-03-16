@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <div class="headerBox">
+            <img src="https://user-images.githubusercontent.com/25527438/136245742-6fff957b-a8af-42ce-8ab9-ff7da8820480.png"
+                alt="ACC_Race_Control_Splash">
+        </div>
+        <div class="contentBox">
+            <h1 id="acc-race-control">ACC Race Control</h1>
+            <p>
+                <br>A tool desinged for stewarding, boradcasting and managing competitive
+                races.
+                ACC Race Control provides you the necessary information to create high quality stewarding solutions and
+                captivating broadcasts.
+            </p>
+            <a class="button" href="https://github.com/LennysLounge/ACC-Race-Control/releases/latest">Download from
+                Github</a><br>
+            <a class="button"
+                href="https://www.racedepartment.com/downloads/acc-race-control.42278/updates#resource-update-84079">Download
+                from Racedepartment</a><br>
+            <br>
+            You can view the user agreement or privacy policy here:<br>
+            <a class="button" href="License.html">End User License Agreement</a>
+            <a class="button" href="PrivacyPolicy.html">Privacy policy</a>
+            <h2 id="what-can-acc-race-control-do-for-you-">What can ACC Race Control do for you?</h2>
+            <ul>
+                <li>A detailed live timing table with information such as lap times, lap delta, gap to the car ahead,
+                    pitstop
+                    times and stint times.</li>
+                <li>Broadcasting controls such as change camera, focused car and HUD selection</li>
+                <li>The option to start a virtual safetycar phase during which any violations are automatically
+                    reported.
+                </li>
+                <li>Automatic collision detection with information about the cars involved and a replay timestamp.</li>
+                <li>Exports incidents to a Google spreadsheet in real time for live or post race stewarding</li>
+                <li>A detailed list of all events that happen during a race including driver connections, disconnects,
+                    lap
+                    completed, collisions, session changes etc.</li>
+            </ul>
+            <h2 id="how-to-use-it">How to use it</h2>
+            <p>First we need to enable the broadcasting API from Assetto Corsa Competizione.
+                To do that navigate
+                to<br><code>...\documents\Assetto Corsa Competizione\Config\broadcasting.json</code><br>and
+                edit its contents.
+                Replace the text with:</p>
+            <pre><code>}
+    <span class="hljs-string">"updListenerPort"</span>: <span class="hljs-number">9000</span>,
+    <span class="hljs-string">"connectionPassword"</span>: <span class="hljs-string">"asd"</span>,
+    <span class="hljs-string">"commandPassword"</span>: <span class="hljs-string">""</span>
+}
+</code></pre>
+            <p>and you are good to go.<br>Then download the tool, unpack it and start it by running the
+                <code>Start.bat</code>
+                file.
+            </p>
+            <h2 id="stewarding-made-easy">Stewarding made easy</h2>
+            <p>ACC Race Control is a tool developed by stewards for stewards. It&#39;s aim is it to make stewarding as
+                easy
+                and
+                accessible as possible.</p>
+            <p>Stewarding a live race has it&#39;s challenges, especially when you have 50 cars on track. It is almost
+                impossible for a few stewards to be able to monitor all cars. As sim racers we dont have the luxury of a
+                big
+                control room with 25+ cameras. Luckily ACC Race Control is here to make your life easier.</p>
+            <p>ACC Race Control uses the ACC Broadcasting API to automatically detect any collisions between two or more
+                cars. I
+                can then send any incident to a Google Spreadsheet to allow a team of stewards to review the incidnet.
+                Easy
+                as
+                that. </p>
+            <p>This tool was developed together with ACCSimSeries on Simracing.gp. It it used almost daily by around six
+                stewards to monitor races with more than 40 cars. If you click the link below you can see how we use it
+                to
+                create our stewarding reports, this example is for 2x30 minute races with 40 drivers taking
+                part.<br><strong>Example steward report:</strong><br><a
+                    href="https://docs.google.com/spreadsheets/d/1SSMe8Vte0beENZtI6sL49uqkfW1_s01DtV1A2Kuew8s/edit?usp=sharing">https://docs.google.com/spreadsheets/d/1SSMe8Vte0beENZtI6sL49uqkfW1_s01DtV1A2Kuew8s/edit?usp=sharing</a>
+            </p>
+            <p>Without this tool that would not be possible.</p>
+        </div>
+    </main>
+</body>
+
+</html>
