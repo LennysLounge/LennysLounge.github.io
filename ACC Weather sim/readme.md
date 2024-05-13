@@ -6,6 +6,8 @@ Use this to find the correct weather settings for your race.
 The weekend forecast that is displayed here is only an example of that kind of weather the settings will produce.
 The server will take your weather settings and always generate a random weekend forecast that may be very different from the forecast displayed here.
 
+Visit [https://www.lennyslounge.net/ACC%20Weather%20sim](https://www.lennyslounge.net/ACC%20Weather%20sim/) to view the simulator.
+
 
 ## How accurate is the simulation?
 Very accurate and not at all at the same time.
